@@ -1,6 +1,6 @@
 import { createStore } from "vuex";
 import router from "../router";
-import toast from "@k90mirzaei/vue-toast";
+// import toast from "../../node_modules/@k90mirzaei/vue-toast";
 
 export default createStore({
   state: {
@@ -31,15 +31,10 @@ export default createStore({
   },
   mutations: {
     addUser(state, user) {
-      // if (data.is_edit) {
-      //   this.updateUserData(data.user);
-      // } else {
-        state.users = [user, ...state.users];
-        // this.$toast.success(`User added`);
-        router.push("/dashboard/list-user");
-      // }
+      state.users = [user, ...state.users];
+      router.push("/dashboard/list-user");
     },
-    updateUser(state,  user ) {
+    updateUser(state, user) {
       let index = state.users.findIndex((item) => item.id === user.id);
       state.users[index] = user;
       // this.$toast.success(`User Updated`);
