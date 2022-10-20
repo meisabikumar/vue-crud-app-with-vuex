@@ -92,8 +92,8 @@ export default {
     onEdit(user_id) {
       this.$router.push(`/dashboard/edit-user/${user_id}`)
     },
-    onDelete(user_id) {
-      this.$store.commit('deleteUser', { user_id })
+    onDelete(email) {
+      this.$store.commit('deleteUser', { email })
     }
   },
   computed: {

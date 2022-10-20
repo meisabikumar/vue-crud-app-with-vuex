@@ -34,7 +34,7 @@ export default createStore({
       // if (data.is_edit) {
       //   this.updateUserData(data.user);
       // } else {
-        state.users = [data.user, ...state.users];
+        state.users = [user, ...state.users];
         // this.$toast.success(`User added`);
         router.push("/dashboard/list-user");
       // }
@@ -45,9 +45,9 @@ export default createStore({
       // this.$toast.success(`User Updated`);
       router.push("/dashboard/list-user");
     },
-    deleteUser(state, { user_id }) {
+    deleteUser(state, { email }) {
       if (confirm("Are you sure?")) {
-        state.users = state.users.filter((user) => user.email != user_id);
+        state.users = state.users.filter((user) => user.email != email);
         // toast.success(`Deleted`);
       }
     },
