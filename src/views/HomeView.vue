@@ -214,7 +214,7 @@
   </section>
   <!-- Testimonials section-->
   <section class="py-5 border-bottom">
-    <div class="container px-5 my-5 px-5">
+    <div class="container px-5 my-5 ">
       <div class="text-center mb-5">
         <h2 class="fw-bolder">Customer testimonials</h2>
         <p class="lead mb-0">Our customers love working with us</p>
@@ -253,7 +253,7 @@
   </section>
   <!-- Contact section-->
   <section class="bg-light py-5">
-    <div class="container px-5 my-5 px-5">
+    <div class="container px-5 my-5 ">
       <div class="text-center mb-5">
         <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-envelope"></i></div>
         <h2 class="fw-bolder">Get in touch</h2>
