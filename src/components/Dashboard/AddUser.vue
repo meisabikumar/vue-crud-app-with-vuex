@@ -16,7 +16,7 @@
       </div>
       <div class="col-md-4">
         <label for="phone" class="form-label">Phone</label>
-        <input type="text" maxlength="10" class="form-control" placeholder="Enter Phone" id="phone" v-model="user.phone"
+        <input type="text" minlength="10" maxlength="10" class="form-control" placeholder="Enter Phone" id="phone" v-model="user.phone"
           required />
 
         <div class="invalid-feedback">Enter phone.</div>
