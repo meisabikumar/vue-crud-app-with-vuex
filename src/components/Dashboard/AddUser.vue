@@ -16,7 +16,8 @@
       </div>
       <div class="col-md-4">
         <label for="phone" class="form-label">Phone</label>
-        <input type="text" maxlength="10" class="form-control" placeholder="Enter Phone" id="phone" v-model="user.phone" required />
+        <input type="text" maxlength="10" class="form-control" placeholder="Enter Phone" id="phone" v-model="user.phone"
+          required />
 
         <div class="invalid-feedback">Enter phone.</div>
       </div>
@@ -76,22 +77,10 @@
 <script>
 export default {
   name: "AddUser",
-  props: ['edit_user'],
   data() {
     return {
-
       is_edit: false,
-      user: {
-        id: Math.floor(Math.random() * 100000),
-        name: "",
-        email: "",
-        phone: "",
-        dob: "",
-        skills: [],
-        address: "",
-        city: "",
-        country: "India",
-      },
+      user: {},
       country_list: [
         { name: 'India', code: 'IN' },
         { name: 'Afghanistan', code: 'AF' },
@@ -340,16 +329,12 @@ export default {
       ],
     };
   },
-  computed: {
-
-
-  },
   methods: {
     isEmailValid(email) {
       let email_regex = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/g;
       if (email != '' && email != null && email != undefined) {
         email = email.toLowerCase();
-        email = email.trim();    
+        email = email.trim();
         return email_regex.test(email)
       }
     },
@@ -370,17 +355,14 @@ export default {
         this.$toast.error(`Name is required`);
         return false;
       }
-
       if (!this.isVarExist(this.user.email)) {
         this.$toast.error(`Email is required`);
         return false;
       }
-
       if (!this.isEmailValid(this.user.email)) {
         this.$toast.error(`Inavlid email`);
         return false;
       }
-
       if (!this.isVarExist(this.user.phone)) {
         this.$toast.error(`Phone is required`);
         return false;
@@ -389,30 +371,26 @@ export default {
         this.$toast.error(`Phone is invalid`);
         return false;
       }
-
       if (!this.isVarExist(this.user.dob)) {
         this.$toast.error(`DOB is required`);
         return false;
       }
-
       return true;
     },
     onSubmit(e) {
       e.preventDefault();
       if (this.isFormValid()) {
-
-        let data = {
-          is_edit: this.is_edit,
-          user: this.user
+        if (!this.is_edit) {
+          this.$store.commit('addUser', this.user)
+        } else {
+          this.$store.commit('updateUser', this.user)
         }
-        this.$emit("add-user", data);    
         this.resetForm()
       }
     },
     resetForm() {
       var element = document.getElementById("form");
       element.classList.remove("was-validated");
-
       this.user = {
         id: Math.floor(Math.random() * 100000),
         name: "",
@@ -427,13 +405,32 @@ export default {
     }
   },
   created() {
-    if (this.edit_user != null) {
+    console.log('user comp');
+    var user_id = this.$route.params.user_id
+    if (user_id) {
+      const user_data = this.getUserList.find(user => user.id = user_id);
+      this.user = JSON.parse(JSON.stringify(user_data));
       this.is_edit = true
-      this.user = this.edit_user
+    } else {
+      this.user = {
+        id: Math.floor(Math.random() * 100000),
+        name: "",
+        email: "",
+        phone: "",
+        dob: "",
+        skills: [],
+        address: "",
+        city: "",
+        country: "India",
+      }
+      this.is_edit = false
     }
-
   },
-  emits: ["add-user"],
+  computed: {
+    getUserList() {
+      return this.$store.getters.getUserList;
+    }
+  },
 };
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-  <!-- <pre>{{user_list}}</pre> -->
+  <!-- <pre>{{getUserList}}</pre> -->
   <!-- <input type="text" v-model="search" /> -->
 
   <!-- {{search_by}} -->
@@ -45,7 +45,9 @@
       </thead>
       <tbody>
         <tr :key="user.id" v-for="(user,index) in filteredItems">
-          <th scope="row">{{index+1}}</th>
+          <th scope="row">{{index+1}}
+            <small>({{user.id}})</small>
+          </th>
           <td>{{user.name}}</td>
           <td>{{user.email}}</td>
           <td>{{user.phone}}</td>
@@ -61,8 +63,10 @@
           <td>{{user.city}}</td>
           <td>{{user.country}}</td>
           <td>
-            <button class="btn btn-secondary" @click="onEdit(user.id)"><i class="fa-regular fa-pen-to-square"></i> Edit</button>
-            <button class="btn btn-danger mt-2" @click="onDelete(user.email)"><i class="fa-solid fa-trash"></i>Delete</button>
+            <button class="btn btn-secondary" @click="onEdit(user.id)"><i class="fa-regular fa-pen-to-square"></i>
+              Edit</button>
+            <button class="btn btn-danger mt-2" @click="onDelete(user.email)"><i
+                class="fa-solid fa-trash"></i>Delete</button>
           </td>
 
         </tr>
@@ -75,9 +79,6 @@
 <script>
 export default {
   name: "ListUsers",
-  props: {
-    user_list: Array
-  },
   data() {
     return {
       search: '',
@@ -89,24 +90,22 @@ export default {
       this.$router.push('/dashboard/add-user')
     },
     onEdit(user_id) {
-      this.$emit("edit-user", user_id);
+      this.$router.push(`/dashboard/edit-user/${user_id}`)
     },
     onDelete(user_id) {
-      this.$emit("delete-user", user_id);
+      this.$store.commit('deleteUser', { user_id })
     }
   },
   computed: {
+    getUserList() {
+      return this.$store.getters.getUserList;
+    },
     filteredItems() {
-      // if (this.search_by == 'name') {
-      return this.user_list.filter(user => {
+      return this.getUserList.filter(user => {
         return user[this.search_by].toLowerCase().indexOf(this.search.toLowerCase()) > -1
       })
-      // }
-
-
     }
   },
-  emits: ["edit-user", 'delete-user'],
 };
 </script>
 
